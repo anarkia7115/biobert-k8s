@@ -1,0 +1,28 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: biobert
+  namespace: $NS
+  labels:
+    app: biobert
+spec:
+  imagePullSecrets:             
+  - name: imagepull-secret
+  containers:
+  - name: pubmed-parser
+    image: $HW_IMAGE_PREFIX/biobert:0.1
+    command: ["sleep", "4000"]
+    resources:
+      limits:
+        cpu: 3
+        memory: 12Gi
+      requests:
+        cpu: 3
+        memory: 12Gi
+    volumeMounts:                 
+    - mountPath: "/data"
+      name: pvc-biobert-data
+  volumes:
+    - name: pvc-biobert-data
+      persistentVolumeClaim:
+        claimName: biobert-data
