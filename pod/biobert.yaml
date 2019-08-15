@@ -9,16 +9,18 @@ spec:
   imagePullSecrets:             
   - name: imagepull-secret
   containers:
-  - name: pubmed-parser
-    image: $HW_IMAGE_PREFIX/biobert:0.1
+  - name: biobert
+    image: $HW_IMAGE_PREFIX/biobert:0.1-gpu
     command: ["sleep", "4000"]
     resources:
       limits:
-        cpu: 3
-        memory: 12Gi
+        cpu: 4
+        memory: 32Gi
+        nvidia.com/gpu-tesla-v100-16GB: 1
       requests:
-        cpu: 3
-        memory: 12Gi
+        cpu: 4
+        memory: 32Gi
+        nvidia.com/gpu-tesla-v100-16GB: 1
     volumeMounts:                 
     - mountPath: "/data"
       name: pvc-biobert-data
